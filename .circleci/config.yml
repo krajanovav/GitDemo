@@ -10,6 +10,13 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
+      - run:
+          name: Install Node.js
+          command: |
+            curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+            sudo apt-get install -y nodejs
+      - run: node -v # Tento příkaz vypíše verzi Node.js pro kontrolu
+      - run: npm -v # Tento příkaz vypíše verzi npm pro kontrolu
       - run: mvn dependency:go-offline
       - save_cache:
           paths:
@@ -23,4 +30,3 @@ workflows:
   build:
     jobs:
       - build-and-test
-
