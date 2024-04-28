@@ -19,12 +19,8 @@ jobs:
           name: Check Node.js version
           command: node -v
       - run:
-          name: Install Node.js
-          command: |
-            curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
-            sudo apt-get install -y nodejs
-      - run: node -v # Tento příkaz vypíše verzi Node.js pro kontrolu
-      - run: npm -v # Tento příkaz vypíše verzi npm pro kontrolu
+          name: Check npm version
+          command: npm -v
       - run: mvn dependency:go-offline
       - save_cache:
           paths:
@@ -32,7 +28,6 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
       - run: mvn package
       - run: mvn test -DsuiteXmlFile=testng.xml
-
 
 workflows:
   version: 2
